@@ -207,7 +207,7 @@ private:
 
 class Solution51 {
 public:
-    vector<vector<string>> res;
+    vector<vector<string> > res;
     vector<int> v;
 
     /**
@@ -217,7 +217,7 @@ public:
         number of queens
      * @return vector<vector<string>> 
      */
-    vector<vector<string>> solveNQueens(int n) {
+    vector<vector<string> > solveNQueens(int n) {
         if (n <= 0) {
             return res;
         }
@@ -227,7 +227,7 @@ public:
     }
 
 private:
-    void search(vector<vector<string>> &res,
+    void search(vector<vector<string> > &res,
                 vector<int> &v,
                 int n) {
         int i = v.size();
@@ -289,7 +289,7 @@ public:
 private:
     void helper(string s,
                 vector<string> &v,
-                vector<vector<string>> &res, 
+                vector<vector<string> > &res, 
                 int p) {
 
         if (p == s.size()) {
@@ -350,14 +350,14 @@ private:
 
 class Solution40 {
 public:
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+    vector<vector<int> > combinationSum2(vector<int>& candidates, int target) {
         sort(candidates.begin(), candidates.end());
         helper(candidates, target, 0);
         return res;
     }
 
 private:
-    vector<vector<int>> res;
+    vector<vector<int> > res;
     vector<int> v;
 
     void helper(vector<int> &candidates, 
