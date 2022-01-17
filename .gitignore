@@ -1,3 +1,6 @@
+#IDE
+.vscode/
+
 # Prerequisites
 *.d
 
@@ -15,6 +18,7 @@
 *.so
 *.dylib
 *.dll
+*.dSYM/*
 
 # Fortran module files
 *.mod

@@ -1,57 +1,4 @@
-#include <algorithm>
-#include <stdlib.h>
-#include <iostream>
-#include <queue>
-#include <type_traits>
-#include <unordered_map>
-#include <vector>
-#include <stack>
-#include <limits>
-
-
-using namespace std;
-
-
-// DP
-class Solution70_DP {
-public:
-    int climbStairs(int n) {
-        // Jumping frog problem in GA
-        vector<int> res(n + 1, 0);
-        res[0] = res[1] = 1;
-        for (size_t i = 2; i <= n; i++) {
-            res[i] = res[i - 1] + res[i - 2];
-        }
-        
-        return res[n];
-    }
-};
-
-// Memorization
-class Solution70_MEM {
-public:
-    int climbStairs(int n) {
-        res = vector<int>(n + 1, 0);
-        return helper(n);
-    }
-
-private:
-    vector<int>res;
-    int helper(int n) {
-        // boundary conditions
-        if (n <= 1) {
-            return 1;
-        }
-
-        // if there's already a state
-        if (res[n] > 0) {
-            return res[n];
-        }
-
-        res[n] = helper(n - 1) + helper(n - 2);
-        return res[n];
-    }
-};
+#include "Common.h"
 
 
 class NumArray {
@@ -84,177 +31,10 @@ private:
  * int param_1 = obj->sumRange(left,right);
  */
 
-class Solution53 {
-public:
-    int maxSubArray(vector<int>& nums) {
-        vector<int>res(nums.size());
-        res[0] = nums[0];
-
-        for (size_t i = 1; i < nums.size(); i++) {
-            res[i] = (res[i - 1] > 0) ? res[i - 1] + nums[i] : nums[i];
-        }
-        return *max_element(res.begin(), res.end());
-    }
-};
 
 
-class Solution62 {
-public:
-    int uniquePaths(int m, int n) {
-        vector<vector<int>> v(m + 1, vector<int>(n + 1, 0));
-        v[1][1] = 1;
-
-        for (size_t i = 1; i <= m; ++i) {
-            for (size_t j = 1; j <= n; ++j) {
-                if (i == 1 && j == 1) {
-                    continue;
-                } else {
-                    v[i][j] = v[i - 1][j] + v[i][j - 1];
-                }
-            }
-        }
-        
-        return v[m][n];
-    }
-};
 
 
-class Solution221 {
-public:
-    int maximalSquare(vector<vector<char>>& matrix) {
-        /**
-         * @brief subproblem: 
-         * let dp[x][y] := max size can achieve at (x, y) as bottom right point
-         * if matrix[x][y] == 0
-         *     dp[x][y] = 0 
-         * else
-         *     dp[x][y] = min(dp[x - 1][y], 
-         *                    dp[x][y - 1],
-         *                    dp[x - 1][y - 1]) + 1
-         */
-        if (matrix.empty()) {
-            return 0;
-        }
-
-        int m = matrix.size(), 
-            n = matrix[0].size();
-
-        vector<vector<int>> sizes(m, vector<int>(n, 0));
-        int max_size = 0;
-        for (size_t i = 0; i < m; ++i) {
-            for (size_t j = 0; j < n; ++j) {
-                sizes[i][j] = matrix[i][j] - '0';
-
-                // if matrix[i][j] == 0, dp[i][j] = 0
-                if (!sizes[i][j]) {
-                    continue;
-                }
-
-                // check boundary
-                if (!(i == 0 || j == 0)) {
-                    sizes[i][j] = min(min(sizes[i - 1][j], sizes[i][j - 1]), 
-                                      sizes[i - 1][j - 1]) + 1;
-                }
-                max_size = max(max_size, sizes[i][j] * sizes[i][j]);
-                cout << sizes[i][j] << " ";
-            }
-            cout << endl;
-        }
-
-        return max_size;
-    }
-};
-
-class Solution85 {
-public:
-    int maximalRectangle(vector<vector<char>>& matrix) {
-        /**
-         * @brief subproblem
-         * let dp[x][y] := max length of all 1's can achieve at (x, y).
-         * must be sequence ends at column y
-         * if matrix[x][y] == '0'
-         *     dp[x][y] = 0
-         * else
-         *     dp[x][y] = d[x][y - 1] + 1
-         */
-        int m = matrix.size();
-
-        if (m == 0) {
-            return 0;
-        }
-
-        int n = matrix[0].size();
-
-        vector<vector<int>> lengths(m, vector<int>(n, 0));
-        int max_size = 0, val, l;
-
-        for (size_t i = 0; i < m; ++i) {
-            for (size_t j = 0; j < n; ++j) {
-                val = matrix[i][j] - '0';
-                lengths[i][j] = (val == 0) ? 0 : lengths[i][j - 1] + 1;
-                cout << lengths[i][j] << " ";
-            }
-            cout << endl;
-        }
-
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                l = INT_MAX;
-                for (int k = i; k < m; ++k) {
-                    l = min(l, lengths[k][j]);
-                    if (l == 0) {
-                        break;
-                    }
-                    max_size = max(max_size, l * (k - i + 1));
-                }
-            }
-        }
-        return max_size;
-    }
-};
-
-
-class Solution131 {
-    vector<vector<string>> res;
-    vector<string> v;
-
-public:
-    vector<vector<string>> partition(string s) {
-        helper(s, v, res, 0);
-        return res;
-    }
-
-private:
-    void helper(string s,
-                vector<string> &v,
-                vector<vector<string>> &res, 
-                int p) {
-
-        if (p == s.size()) {
-            res.emplace_back(v);
-        }
-
-        string substr = "";
-        for (int i = p; i < s.size(); i++) {
-            substr += s.at(i);
-            if (isPalindrome(substr)) {
-                v.push_back(substr);
-                helper(s, v, res, i + 1);
-                v.pop_back();
-            }
-        }
-    }
-
-    bool isPalindrome(string s) {
-        for (int i = 0, j = s.size() - 1; i < j; i++, j--) {
-            if (s.at(i) != s.at(j)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-};
 
 
 class Solution72 {
@@ -375,6 +155,121 @@ public:
         }
         cout << endl;
         return res[n];
+    }
+};
+
+
+class Solution813 {
+public:
+    double largestSumOfAverages(vector<int>& nums, int k) {
+        /**
+         * @brief subproblems - Knapsack without repetition
+         * possible partition positions nums.size() - 1
+         * let T[w] := max sum of averages of subarrays achievable with a knapsack of partition w 
+         * and a0, ..., ai - 1 including ai - 1
+         * -> is it necessary to put a divider after ai - 1
+         * -> T[w, i] = max{T[w - wi, i - 1] + vi, T[w, i - i])
+         *    for i = 1 to n and w = 1 to w
+         */
+        const int n = nums.size();
+
+        // init k * n matrix
+        vector<vector<double>> dp(k + 1, vector<double> (n + 1, 0.0));
+        vector<double> sums(n + 1, 0.0);
+
+        for (int i = 1; i <= n; ++i) {
+            sums[i] = sums[i - 1] + nums[i - 1];
+            dp[1][i] = static_cast<double>sums[i] / i;
+        }
+
+        for (int i = 2; i <= k; ++i) {
+            for (int j = i; j <= n; ++j) {
+                for (int l = i - 1; l < j; ++l) {
+                    dp[i][j] = max(dp[i][j], dp[i - 1][l] + (sums[j] - sums[l]) / (j - l));
+                }
+            }
+        }
+        return dp[k][n];
+    }
+};
+
+
+class Solution1137 {
+public:
+    int tribonacci(int n) {
+        vector<int> arr {0, 1, 1, 0};
+        for (int i = 3; i < n; ++i) {
+            arr[i % 4] = arr[(i - 1) % 4] + arr[(i - 2) % 4] + arr[(i -3) %4];
+        }
+        return arr[i % 4];
+    }
+};
+
+
+class Solution198 {
+public:
+    int rob(vector<int>& nums) {
+        // subproblem: dp[i] := max money after visiting nums[i]
+        // dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
+        if (nums.empty())
+            return 0;
+
+        if (nums.size() == 1)
+            return nums[0];
+
+        vector<int> dp {nums[0], max(nums[0], nums[1]), 0};
+        for (int i = 2; i < nums.size(); ++i)
+            dp[i % 3] = max(dp[(i - 2) % 3] + nums[i], dp[(i - 1) % 3]);
+
+        return dp[(nums.size() - 1) % 3];
+    }
+};
+
+
+class Solution20 {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+
+        for (char &c : s) {
+            switch (c) {
+            case '(':
+                st.push(')');
+                break;
+
+            case '[':
+                st.push(']');
+                break;
+
+            case '{':
+                st.push('}');
+                break;
+
+            default:
+                if (st.empty() || c != st.top())
+                    return false;
+                else
+                    st.pop();
+                break;
+            }
+        }
+        return st.empty() ? true : false;
+    }
+};
+
+
+class Solution121 {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res = 0;
+        int price_min = INT_MAX;
+
+        for (int i = 0; i < prices.size(); ++i) {
+            price_min = min(price_min, prices[i]);
+            res = max(res, prices[i] - price_min);
+        }
+
+        return res;
     }
 };
 

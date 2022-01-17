@@ -6,9 +6,10 @@
 #include <unordered_map>
 #include <vector>
 #include <stack>
-
+#include <numeric>
 
 using namespace std;
+
 
 class Solution704 {
 public:
