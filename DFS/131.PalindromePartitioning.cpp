@@ -1,7 +1,7 @@
 #include "Common.h"
 
 
-class Solution131 {
+class Solution {
     vector<vector<string>> res;
     vector<string> v;
 
