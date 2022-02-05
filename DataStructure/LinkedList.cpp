@@ -289,38 +289,6 @@ public:
     }
 };
 
-
-class Solution141 {
-public:
-    bool hasCycle(ListNode *head) {
-        if (head == nullptr) {
-            return false;
-        }
-
-        ListNode *slow = head, 
-                 *fast = head->next;
-
-        // while (fast && fast->next) {
-        //     slow = slow->next;
-        //     fast = fast->next->next;
-        //     if (slow == fast) {
-        //         return true;
-        //     }
-        // }
-        // return false;
-        while (fast != slow) {
-            if (fast == nullptr || fast->next == nullptr) {
-                return false;
-            }
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-
-        return true;
-    }
-};
-
-
 class Solution142 {
 public:
     ListNode *detectCycle(ListNode *head) {

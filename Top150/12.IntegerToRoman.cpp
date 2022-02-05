@@ -24,7 +24,7 @@ public:
             for (int j = 0; j < num / integers[i]; ++j) {
                 s += romans[i]; 
             }
-            num = num % integers[i];
+            num %= integers[i];
         }
         return s;
     }

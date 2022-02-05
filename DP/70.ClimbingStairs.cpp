@@ -27,7 +27,7 @@ public:
 private:
     vector<int>res;
     int helper(int n) {
-        // boundary conditions
+        // base case
         if (n <= 1) {
             return 1;
         }
