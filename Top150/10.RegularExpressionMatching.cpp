@@ -7,8 +7,9 @@ public:
         /**
          * @brief subproblem: T[i][j] := if s[0:i] matches p[j]
          * 1. T[i][j] = T[i - 1][j - 1] && (s[i] == p[j] || p[j] == '.')
-         * 2. if p[j] == '*',
-         *        p[j - 1] repeats 0 times and matches empty
+         * 2
+         * 
+         *       p[j - 1] repeats 0 times and matches empty
          *        
          */
         int i = 0, j = 0;

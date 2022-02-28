@@ -282,63 +282,6 @@ public:
  */
 
 
-class Solution79 {
-public:
-    bool exist(vector<vector<char>>& board, string word) {
-        for (size_t i = 0; i < board.size(); i++) {
-            for (size_t j = 0; j < board[0].size(); j++) {
-                if (dfs(board, i, j, word)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    bool dfs(vector<vector<char>> board, int i, int j, string &word) {
-        // boundary condition
-        if (word.empty()) {
-            return true;
-        }
-
-        // stop condition, hit the boundary
-        if (i < 0 || 
-            i >= board.size() || 
-            j < 0 || 
-            j >= board[0].size() || 
-            board[i][j] != word[0]) {
-                return false;
-        }
-
-        display(board);
-        char c = board[i][j];
-
-        // mask
-        board[i][j] = '*';
-        string s = word.substr(1);
-        bool ret = dfs(board, i - 1, j, s) ||
-            dfs(board, i + 1, j, s) ||
-            dfs(board, i, j - 1, s) ||
-            dfs(board, i, j + 1, s);
-
-        // write back
-        board[i][j] = c;
-        return ret;
-    }
-
-private:
-    void display(vector<vector<char>> &board) {
-        for (size_t i = 0; i < board.size(); i++) {
-            for (size_t j = 0; j < board[0].size(); j++) {
-                cout << board[i][j] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-    }
-};
-
-
 class Solution442 {
 public:
     vector<int> findDuplicates(vector<int>& nums) {
