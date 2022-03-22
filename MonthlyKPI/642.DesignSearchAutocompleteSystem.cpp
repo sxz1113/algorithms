@@ -26,7 +26,7 @@ private:
         Node* cur = root;
         for (char c : s) {
             if (!cur->child.count(c)) {
-                cur->child[c] = new Node();                
+                cur->child[c] = new Node();
             }
             cur = cur->child[c];
         }

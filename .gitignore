@@ -1,6 +1,9 @@
 #IDE
 .vscode/
 
+#MAC OS
+.DS_Store
+
 # Prerequisites
 *.d
 
@@ -34,3 +37,4 @@
 *.exe
 *.out
 *.app
+
