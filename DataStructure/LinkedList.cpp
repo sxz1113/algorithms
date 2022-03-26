@@ -350,14 +350,6 @@ public:
 };
 
 
-class Solution138 {
-public:
-    Node* copyRandomList(Node* head) {
-        return head;
-    }
-};
-
-
 class Solution108 {
 private:
     TreeNode* buildBST(vector<int>& nums, int start, int end) {
