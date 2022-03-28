@@ -3,22 +3,36 @@
 
 class Solution {
 public:
-    // two pointer???
-    int minDeletion(vector<int>& nums) {
-        int offset = 0, 
-            n = nums.size(),
-            res = 0;
-
-        for (int i = 0; i < n; ++i) {
-            if ((i + offset) % 2 == 0 && nums[i] == nums[i + 1]) {
-                // printf("%d: %d -- %d\n", i + offset, nums[i + offset], nums[i + offset + 1]);
-                res++;
-                offset++;
-            }
-        }
-        return res;
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> v1, v2;
+        set<int> s1(nums1.begin(), nums1.end()), 
+                 s2(nums2.begin(), nums2.end());
+        set_difference(s1.begin(), s1.end(), s2.begin(), s2.end(), 
+                       back_inserter(v1));
+        set_difference(s2.begin(), s2.end(), s1.begin(), s1.end(), 
+                       back_inserter(v2));
+        return { v1, v2 };
     }
 };
+
+
+class Solution {
+public:
+    int minDeletion(vector<int>& nums) {
+        int n = nums.size(),
+            res = 0;
+
+        for (int i = 0; i < n - 1; ++i) {
+            // check condition 2
+            if ((i - res) % 2 == 0 && nums[i] == nums[i + 1])
+                res++;
+        }
+
+        // check if the length of nums is even
+        return res + (n - res) % 2;
+    }
+};
+
 
 
 class Solution {
