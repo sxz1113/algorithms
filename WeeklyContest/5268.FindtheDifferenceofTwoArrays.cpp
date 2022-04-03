@@ -38,36 +38,34 @@ public:
 class Solution {
 public:
     vector<long long> kthPalindrome(vector<int>& queries, int intLength) {
-        vector<long long> res(queries.size());
+        vector<long long> res(queries.size(), -1);
         int n = queries.size();
-        int len = (intLength + 1) / 2;
-        printf("half len = %d\n", len);
-        int max_query = 1;
+        int half_len = (intLength + 1) / 2;
+        int max_queries = 9 * pow(10L, half_len - 1);
+        long start = pow(10L, (intLength - 1) / 2);
+        // printf("half len = %d, max query = %d\n", 
+        //        half_len, 
+        //        max_queries);
 
-        for (int i = 1; i < len; ++i)
-            max_query *= 10;
-
-        max_query *= 9;
-        printf("max query = %d\n", max_query);
-        stack<int> stk;
-
-        for (int i = 0; i < n; ++n) {
-            int query = queries[i] - 1;
-            if (query >= max_query) {
-                res.push_back(-1);
-            } else {
-                while (query > 1) {
-                    stk.push(query % 10);
-                    query /= 10;
-                }
-
-                while (!stk.empty()) {
-                    int d = stk.top();
-                    int s {};
-                    stk.pop();
-                }
-                
+        for (int i = 0; i < n; ++i) {
+            if (queries[i] <= max_queries) {
+                res[i] = generate_palindrome(start + queries[i] - 1, intLength % 2);
             }
         }
+        return res;
+    }
+
+private:
+    long long generate_palindrome(long long half, bool is_odd) {
+        long long res = half;
+        if (is_odd)
+            half /= 10;
+
+        while (half > 0) {
+            res = res * 10 + half % 10;
+            half /= 10;
+        }
+
+        return res;
     }
 };

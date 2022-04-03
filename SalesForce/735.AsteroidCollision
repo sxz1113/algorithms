@@ -1,0 +1,35 @@
+#include "../Common.h"
+
+
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int> stk;
+        for (int asteroid : asteroids) {
+            if (stk.empty() || asteroid > 0) {
+                stk.push(asteroid);
+            } else {
+                while (!stk.empty() && stk.top() > 0 && abs(asteroid) > stk.top()) {
+                    stk.pop();
+                }
+
+                if (!stk.empty() && abs(asteroid) == stk.top()) {
+                    stk.pop();
+                } else {
+                    if (stk.empty() || stk.top() > 0) {
+                        stk.push(asteroid);
+                    }
+                }
+            }
+        }
+
+        int n = stk.size();
+        vector<int> res(n);
+        int i = n - 1;
+        while (!stk.empty()) {
+            res[i++] = stk.top();
+            stk.pop();
+        }
+        return res;
+    }
+};
