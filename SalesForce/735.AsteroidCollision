@@ -15,10 +15,8 @@ public:
 
                 if (!stk.empty() && abs(asteroid) == stk.top()) {
                     stk.pop();
-                } else {
-                    if (stk.empty() || stk.top() > 0) {
-                        stk.push(asteroid);
-                    }
+                } else if (stk.empty() || stk.top() < 0) {
+                    stk.push(asteroid);
                 }
             }
         }
@@ -27,7 +25,7 @@ public:
         vector<int> res(n);
         int i = n - 1;
         while (!stk.empty()) {
-            res[i++] = stk.top();
+            res[i--] = stk.top();
             stk.pop();
         }
         return res;
