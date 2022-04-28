@@ -3,40 +3,6 @@
 
 class Solution {
 public:
-    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
-        vector<int> v1, v2;
-        set<int> s1(nums1.begin(), nums1.end()), 
-                 s2(nums2.begin(), nums2.end());
-        set_difference(s1.begin(), s1.end(), s2.begin(), s2.end(), 
-                       back_inserter(v1));
-        set_difference(s2.begin(), s2.end(), s1.begin(), s1.end(), 
-                       back_inserter(v2));
-        return { v1, v2 };
-    }
-};
-
-
-class Solution {
-public:
-    int minDeletion(vector<int>& nums) {
-        int n = nums.size(),
-            res = 0;
-
-        for (int i = 0; i < n - 1; ++i) {
-            // check condition 2
-            if ((i - res) % 2 == 0 && nums[i] == nums[i + 1])
-                res++;
-        }
-
-        // check if the length of nums is even
-        return res + (n - res) % 2;
-    }
-};
-
-
-
-class Solution {
-public:
     vector<long long> kthPalindrome(vector<int>& queries, int intLength) {
         vector<long long> res(queries.size(), -1);
         int n = queries.size();
