@@ -15,6 +15,7 @@
 #include <unordered_set>>
 #include <limits>
 #include <numeric>
+#include <assert.h>
 
 using namespace std;
 #endif
